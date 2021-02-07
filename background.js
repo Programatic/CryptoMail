@@ -27,10 +27,18 @@ chrome.runtime.onInstalled.addListener(async function (details) {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    if (request.greeting == "hello")
-      sendResponse({farewell: "goodbye"});
+
+    
+var requestOptions = {
+  method: 'POST',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8000/api/client_add", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+    // sendResponse({farewell: request.message});
   }
 );
