@@ -42,13 +42,10 @@ chrome.runtime.onInstalled.addListener(async function (details) {
 
 
             // TEST CODE ONLY
-            chrome.storage.local.get(['CryptoMailKeys'], function (result) {
-                console.log('Value currently is ' + result);
-            });
+
         });
     }
 });
-
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
@@ -96,6 +93,10 @@ chrome.runtime.onMessage.addListener(
                     })
                     .catch(error => console.log('error', error));
             }));
+        if (request.greeting == "getKey") {
+            chrome.storage.local.get("CryptoMailKeys", function(value) {
+                sendResponse({key: value});
+            })
         }
     }
 );

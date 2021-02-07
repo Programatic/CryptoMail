@@ -22,10 +22,21 @@ function startExtension(gmail) {
 
         gmail.observe.on("view_email", (domEmail) => {
             const DELIMETER = "/Encrypt/";
+
             const originalBody = domEmail.body();
             var encryptedData = extractEncryptionData(domEmail.body(), DELIMETER);
             if (originalBody.indexOf(DELIMETER) > 0) {
-                domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "this is a test message"));
+                chrome.runtime.send_message(message: "getKey", function(response) {
+                    crypto.subtle.decrypt(
+                        {
+                            name: "RSA-OAEP"
+                        },
+                        response,
+                        encryptedData
+                    ).then(function(decryptedText) {
+                        domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, decryptedText));
+                    });
+                });
             }
         });
     });
