@@ -1,0 +1,14 @@
+{
+  "name": "CryptoMail",
+  "version": "1.0",
+  "description": "Securely send mail through your favorite web browsers with CryptoMail!",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["https://mail.google.com/*", "http://mail.google.com/*"],
+    "js": ["google_mail.js"]
+  }],
+  "manifest_version": 3
+}
