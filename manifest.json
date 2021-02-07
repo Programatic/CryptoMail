@@ -2,13 +2,31 @@
   "name": "CryptoMail",
   "version": "1.0",
   "description": "Securely send mail through your favorite web browsers with CryptoMail!",
-  "permissions": ["storage"],
+  "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [{
-    "matches": ["https://mail.google.com/*", "http://mail.google.com/*"],
-    "js": ["google_mail.js"]
-  }],
-  "manifest_version": 3
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "http://mail.google.com/*",
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "src/extensionInjector.js",
+        "google_mail.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    "dist/*.js"
+  ],
+
+  "permissions": [
+    "https://*/*",
+    "storage"
+  ]
 }

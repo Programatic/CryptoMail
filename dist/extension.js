@@ -21,11 +21,22 @@ function startExtension(gmail) {
         console.log("Hello, " + userEmail + ". This is your extension talking!");
 
         gmail.observe.on("view_email", (domEmail) => {
-            console.log("Looking at email:", domEmail);
-            const emailData = gmail.new.get.email_data(domEmail);
-            console.log("Email data:", emailData);
+            const DELIMETER = "/Encrypt/";
+            const originalBody = domEmail.body();
+            var encryptedData = extractEncryptionData(domEmail.body(), DELIMETER);
+            if (originalBody.indexOf(DELIMETER) > 0) {
+                domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
+            }
         });
     });
 }
 
 },{}]},{},[1]);
+
+function extractEncryptionData(str, DELIMETER) {
+    var newStr = str.substring(
+        str.indexOf(DELIMETER) + DELIMETER.length,
+        str.lastIndexOf(DELIMETER)
+    );
+    return newStr;
+}
