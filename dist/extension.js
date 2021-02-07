@@ -26,15 +26,17 @@ function startExtension(gmail) {
             const originalBody = domEmail.body();
             var encryptedData = extractEncryptionData(domEmail.body(), DELIMETER);
             if (originalBody.indexOf(DELIMETER) > 0) {
-                var getKey = chrome.runtime.sendMessage("elmaljbnnbpkikogaonmigpbfhhikhba", {message: "getKey"}, function(response) {
-                    console.log(response);
-                    domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
+                chrome.runtime.send_message(message: "getKey", function(response) {
+                    crypto.subtle.decrypt(
+                        {
+                            name: "RSA-OAEP"
+                        },
+                        response,
+                        encryptedData
+                    ).then(function(decryptedText) {
+                        domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, decryptedText));
+                    });
                 });
-
-                /*getKey.then(function(response) {
-                    console.log(response);
-                    domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
-                }, function(err) {});*/
             }
         });
     });
