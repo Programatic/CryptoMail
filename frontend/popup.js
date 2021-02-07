@@ -6,6 +6,11 @@ function encrypt_message() {
         type: "encrypt",
         address: address.value,
         message: content.value,
+    }, function (res) {
+        console.log(res);
+        res.then(r => {
+            alert(r);
+        })
     });
 }
 

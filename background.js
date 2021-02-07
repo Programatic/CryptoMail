@@ -67,31 +67,35 @@ chrome.runtime.onMessage.addListener(
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/client_query", requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    let json = JSON.parse(result);
+            sendResponse(new Promise(function (resolve) {
 
-                    crypto.subtle.importKey("spki", new Uint8Array(json.key), {
-                        name: "RSA-OAEP",
-                        hash: "SHA-256"
-                    }, true, ["encrypt"]).then(key => {
+                fetch("http://localhost:8000/api/client_query", requestOptions)
+                    .then(response => response.text())
+                    .then(result => {
+                        let json = JSON.parse(result);
 
-                        let enc = new TextEncoder();
+                        crypto.subtle.importKey("spki", new Uint8Array(json.key), {
+                            name: "RSA-OAEP",
+                            hash: "SHA-256"
+                        }, true, ["encrypt"]).then(key => {
 
-                        window.crypto.subtle.encrypt({
-                                name: "RSA-OAEP"
-                            },
-                            key,
-                            enc.encode(request.message)
-                        ).then(res => {
-                            let dec = new TextDecoder();
-                            console.log(dec.decode(res));
+                            let enc = new TextEncoder();
+
+                            window.crypto.subtle.encrypt({
+                                    name: "RSA-OAEP"
+                                },
+                                key,
+                                enc.encode(request.message)
+                            ).then(res => {
+                                let dec = new TextDecoder();
+                                console.log(dec.decode(res));
+                                resolve(dec.decode(res));
+                            });
+
                         });
-
-                    });
-                })
-                .catch(error => console.log('error', error));
+                    })
+                    .catch(error => console.log('error', error));
+            }));
         }
     }
 );
