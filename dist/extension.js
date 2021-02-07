@@ -26,11 +26,15 @@ function startExtension(gmail) {
             const originalBody = domEmail.body();
             var encryptedData = extractEncryptionData(domEmail.body(), DELIMETER);
             if (originalBody.indexOf(DELIMETER) > 0) {
-                chrome.storage.local.get(['CryptoMailKeys'], function (result) {
-                    console.log('YIN Value currently is ' + result);
+                var getKey = chrome.runtime.sendMessage("elmaljbnnbpkikogaonmigpbfhhikhba", {message: "getKey"}, function(response) {
+                    console.log(response);
+                    domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
                 });
 
-                domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
+                /*getKey.then(function(response) {
+                    console.log(response);
+                    domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
+                }, function(err) {});*/
             }
         });
     });

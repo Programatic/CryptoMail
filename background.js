@@ -21,35 +21,20 @@ chrome.runtime.onInstalled.addListener(async function (details) {
 
 
             // TEST CODE ONLY
-            chrome.storage.local.get(['CryptoMailKeys'], function (result) {
-                console.log('Value currently is ' + result);
-            });
+
         });
     }
 });
 
+console.log(chrome.runtime.id);
 
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-
-
-var data = JSON.stringify({"addres":"fms34@case.edu","value":[1,2,3,4,5]});
-
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function() {
-  if(this.readyState === 4) {
-    console.log(this.responseText);
-  }
-});
-
-xhr.open("POST", "http://localhost:8000/api/client_add");
-xhr.setRequestHeader("Content-Type", "application/json");
-
-xhr.send(data);
-
-
-    // sendResponse({farewell: request.message});
-  }
+    function(request, sender, sendResponse) {
+        console.log("MADE IT HERE");
+        console.log(sender.tab ?
+            "from a content script:" + sender.tab.url :
+            "from the extension");
+        if (request.greeting == "getKey")
+            sendResponse({farewell: "goodbye"});
+    }
 );
