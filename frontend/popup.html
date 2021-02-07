@@ -1,16 +1,28 @@
 <!DOCTYPE html>
+
 <head>
   <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
-  <form>
-  <label for="address">Sender Address:</label><br>
-  <input type="text" id="address" name="address"><br>
-  <label for="email_body">Email Body:</label><br>
-  <textarea id="content" name="content" rows="30" cols="90"></textarea>
-</form>
-  <Button id="submit_button">
-    Encrypt
-  </Button>
+  <div><br /></div>
+  <form class="indent">
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Email address</label>
+      <input type="email" class="form-control col-7" id="address" placeholder="name@example.com">
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Email Content</label>
+      <textarea class="form-control col-7" id="content" rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary" id="submit_button">Encrypt</button>
+  </form>
+  <div>
+    <br />
+  </div>
+
   <script src="popup.js"></script>
+
 </body>
