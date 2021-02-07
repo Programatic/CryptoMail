@@ -3,7 +3,7 @@ let content = document.getElementById("content");
 
 function encrypt_message() {
     chrome.runtime.sendMessage({
-        type: "address",
+        type: "encrypt",
         address: address.value,
         message: content.value,
     });

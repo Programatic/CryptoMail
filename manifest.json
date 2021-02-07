@@ -4,7 +4,10 @@
   "description": "Securely send mail through your favorite web browsers with CryptoMail!",
   "manifest_version": 2,
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_popup": "frontend/popup.html"
   },
   "content_scripts": [
     {
