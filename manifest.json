@@ -10,5 +10,9 @@
     "matches": ["https://mail.google.com/*", "http://mail.google.com/*"],
     "js": ["google_mail.js"]
   }],
+  "action": {
+    "default_popup": "frontend/popup.html",
+    "default_title": "CryptoMail"
+  },
   "manifest_version": 3
 }
