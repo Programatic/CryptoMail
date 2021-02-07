@@ -22,9 +22,14 @@ function startExtension(gmail) {
 
         gmail.observe.on("view_email", (domEmail) => {
             const DELIMETER = "/Encrypt/";
+
             const originalBody = domEmail.body();
             var encryptedData = extractEncryptionData(domEmail.body(), DELIMETER);
             if (originalBody.indexOf(DELIMETER) > 0) {
+                chrome.storage.local.get(['CryptoMailKeys'], function (result) {
+                    console.log('YIN Value currently is ' + result);
+                });
+
                 domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
             }
         });
