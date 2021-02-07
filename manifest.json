@@ -2,7 +2,7 @@
   "name": "CryptoMail",
   "version": "1.0",
   "description": "Securely send mail through your favorite web browsers with CryptoMail!",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "background": {
     "service_worker": "background.js"
   },
