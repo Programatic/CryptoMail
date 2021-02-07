@@ -25,7 +25,7 @@ function startExtension(gmail) {
             const originalBody = domEmail.body();
             var encryptedData = extractEncryptionData(domEmail.body(), DELIMETER);
             if (originalBody.indexOf(DELIMETER) > 0) {
-                domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "fords a hoe"));
+                domEmail.body(originalBody.replaceAll(DELIMETER, "").replace(encryptedData, "this is a test message"));
             }
         });
     });
